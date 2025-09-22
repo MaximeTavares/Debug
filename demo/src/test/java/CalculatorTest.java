@@ -3,6 +3,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.text.MessageFormat;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Set;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -12,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.*;
 
 import debug.Calculator;
 
@@ -58,7 +61,7 @@ public class CalculatorTest {
         int result = calculatorUnderTest.add(a, b);
 
         // Assert
-        assertEquals(5, result);
+        assertThat(result).isEqualTo(5);
     }
 
     @Test
@@ -71,7 +74,7 @@ public class CalculatorTest {
         int result = calculatorUnderTest.multiply(a, b);
 
         // Assert
-        assertEquals(20, result);
+        assertThat(result).isEqualTo(20);
     }
 
     @ParameterizedTest(name = "{0} * 0 must be 0")
@@ -81,7 +84,7 @@ public class CalculatorTest {
         int result = calculatorUnderTest.multiply(arg, 0);
 
         // Assert
-        assertEquals(0, result);
+        assertThat(result).isZero();
     }
 
     @ParameterizedTest(name = "{0} + {1} must be {2}")
@@ -97,7 +100,32 @@ public class CalculatorTest {
         int result = calculatorUnderTest.add(arg1, arg2);
 
         // Assert
-        assertEquals(expectedResult, result);
+        assertThat(result).isEqualTo(expectedResult);
     }
+
+    @Test
+    public void shouldReturnTheListOfDigits_ofPositiveNumber() {
+        // Given
+        int number = 12345;
+
+        // When
+        Set<Integer> digits = calculatorUnderTest.digitsSet(number);
+
+        // Then
+        assertThat(digits).containsExactlyInAnyOrder(1, 2, 3, 4, 5);
+    }
+
+    @Test
+    public void shouldReturnTheListOfDigits_ofNegativeNumber() {
+        // Given
+        int number = -12345;
+
+        // When
+        Set<Integer> digits = calculatorUnderTest.digitsSet(number);
+
+        // Then
+        assertThat(digits).containsExactlyInAnyOrder(1, 2, 3, 4, 5);
+    }
+    
 
 }
