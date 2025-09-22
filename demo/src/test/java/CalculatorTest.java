@@ -5,32 +5,42 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Set;
 
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import debug.Calculator;
 
+@ExtendWith(LoggingExtension.class)
 public class CalculatorTest {
 
     private Calculator calculatorUnderTest;
 
     private static Instant startedAt;
 
+    private Logger logger;
+
+    public void setLogger(Logger logger) {
+        this.logger = logger;
+    }
+
     @BeforeEach
     public void initCalculator() {
-        System.out.println("BeforeEach - initCalculator");
+        logger.info("BeforeEach - initCalculator");
         calculatorUnderTest = new Calculator();
     }
 
     @AfterEach
     public void clearCalculator() {
-        System.out.println("AfterEach - clearCalculator");
+        logger.info("AfterEach - clearCalculator");
         calculatorUnderTest = null;
     }
 
@@ -49,6 +59,7 @@ public class CalculatorTest {
     }
 
     @Test
+    @Tag("BasicsOperations")
     void testAddTwoPositiveNumbers() {
         // Arrange
         int a = 2;
@@ -62,6 +73,7 @@ public class CalculatorTest {
     }
 
     @Test
+    @Tag("BasicsOperations")
     void testMultiplyTwoPositiveNumbers() {
         // Arrange
         int a = 4;
@@ -72,6 +84,49 @@ public class CalculatorTest {
 
         // Assert
         assertThat(result).isEqualTo(20);
+    }
+
+    @Test
+    @Tag("BasicsOperations")
+    void testSubtractTwoPositiveNumbers() {
+        // Arrange
+        int a = 10;
+        int b = 4;
+
+        // Act
+        int result = calculatorUnderTest.subtract(a, b);
+
+        // Assert
+        assertThat(result).isEqualTo(6);
+    }
+
+    @Test
+    @Tag("BasicsOperations")
+    void testDivideTwoPositiveNumbers() {
+        // Arrange
+        int a = 20;
+        int b = 4;
+
+        // Act
+        int result = calculatorUnderTest.divide(a, b);
+
+        // Assert
+        assertThat(result).isEqualTo(5);
+    }
+
+    @Test
+    @Tag("BasicsOperations")
+    void testDivideByZeroShouldThrowException() {
+        // Arrange
+        int a = 10;
+        int b = 0;
+
+        // Act & Assert
+        try {
+            calculatorUnderTest.divide(a, b);
+        } catch (IllegalArgumentException e) {
+            assertThat(e.getMessage()).isEqualTo("Division by zero is not allowed.");
+        }
     }
 
     @ParameterizedTest(name = "{0} * 0 must be 0")
