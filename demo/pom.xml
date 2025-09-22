@@ -11,6 +11,9 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <sonar.organization>smart-ize</sonar.organization>
+        <sonar.projectKey>MaximeTavares_Debug</sonar.projectKey>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
 
@@ -58,6 +61,13 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>yourPluginVersion</version>
+            </plugin>
+
         </plugins>
     </build>
 

@@ -1,4 +1,4 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.MessageFormat;
 import java.time.Duration;
@@ -13,8 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.assertj.core.api.Assertions;
-import static org.assertj.core.api.Assertions.*;
 
 import debug.Calculator;
 
@@ -49,7 +47,6 @@ public class CalculatorTest {
         long duration = Duration.between(startedAt, endedAt).toMillis();
         System.out.println(MessageFormat.format("Durée des test : {0} ms", duration));
     }
-
 
     @Test
     void testAddTwoPositiveNumbers() {
@@ -89,11 +86,11 @@ public class CalculatorTest {
 
     @ParameterizedTest(name = "{0} + {1} must be {2}")
     @CsvSource({
-        "1, 1, 2",
-        "2, 3, 5",
-        "42, 58, 100",
-        "-1, 1, 0",
-        "-5, -5, -10"
+            "1, 1, 2",
+            "2, 3, 5",
+            "42, 58, 100",
+            "-1, 1, 0",
+            "-5, -5, -10"
     })
     public void AddShouldReturnTheSumOfTwoValue(int arg1, int arg2, int expectedResult) {
         // Act
@@ -126,6 +123,5 @@ public class CalculatorTest {
         // Then
         assertThat(digits).containsExactlyInAnyOrder(1, 2, 3, 4, 5);
     }
-    
 
 }
