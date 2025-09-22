@@ -1,5 +1,5 @@
 # Maven
-target/
+demo/target/
 
 # Compiled class file
 *.class
