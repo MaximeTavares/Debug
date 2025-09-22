@@ -9,6 +9,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import debug.Calculator;
 
@@ -69,6 +72,32 @@ public class CalculatorTest {
 
         // Assert
         assertEquals(20, result);
+    }
+
+    @ParameterizedTest(name = "{0} * 0 must be 0")
+    @ValueSource(ints = { -1, 0, 1, 42, 100 })
+    public void multiplyByZeroShouldReturnZero(int arg) {
+        // Act
+        int result = calculatorUnderTest.multiply(arg, 0);
+
+        // Assert
+        assertEquals(0, result);
+    }
+
+    @ParameterizedTest(name = "{0} + {1} must be {2}")
+    @CsvSource({
+        "1, 1, 2",
+        "2, 3, 5",
+        "42, 58, 100",
+        "-1, 1, 0",
+        "-5, -5, -10"
+    })
+    public void AddShouldReturnTheSumOfTwoValue(int arg1, int arg2, int expectedResult) {
+        // Act
+        int result = calculatorUnderTest.add(arg1, arg2);
+
+        // Assert
+        assertEquals(expectedResult, result);
     }
 
 }
