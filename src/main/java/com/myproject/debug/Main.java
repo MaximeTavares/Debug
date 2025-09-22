@@ -1,4 +1,4 @@
-package debug;
+package com.myproject.debug;
 
 public class Main {
     public static void main(String[] args) {

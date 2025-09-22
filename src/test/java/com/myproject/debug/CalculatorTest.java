@@ -1,3 +1,4 @@
+package com.myproject.debug;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.text.MessageFormat;
@@ -16,8 +17,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-
-import debug.Calculator;
 
 @ExtendWith(LoggingExtension.class)
 public class CalculatorTest {

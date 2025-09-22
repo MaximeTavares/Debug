@@ -1,4 +1,4 @@
-package debug;
+package com.myproject.debug;
 
 import java.util.HashSet;
 import java.util.Set;
