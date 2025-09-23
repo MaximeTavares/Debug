@@ -15,15 +15,15 @@ public class SolutionFormatterTest {
     }
 
     @Test
-	public void format_shouldFormatAnyBigNumber() {
-		// GIVEN
-		final int number = 1234567890;
+    public void format_shouldFormatAnyBigNumber() {
+        // GIVEN
+        final int number = 1234567890;
 
-		// WHEN
-		final String result = solutionFormatter.format(number);
+        // WHEN
+        final String result = solutionFormatter.format(number);
 
-		// THEN
-		assertThat(result).isEqualTo("1 234 567 890");
+        // THEN
+        assertThat(result).isEqualTo("1 234 567 890");
     }
 
 }
