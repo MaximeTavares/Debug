@@ -59,7 +59,7 @@ public class CalculatorTest {
 
     @Test
     @Tag("BasicsOperations")
-    void testAddTwoPositiveNumbers() {
+    void Add_TwoPositiveNumbers_ReturnTheirSum() {
         // Arrange
         int a = 2;
         int b = 3;
@@ -73,7 +73,7 @@ public class CalculatorTest {
 
     @Test
     @Tag("BasicsOperations")
-    void testMultiplyTwoPositiveNumbers() {
+    void Multiply_TwoPositiveNumbers_ReturnTheirSum() {
         // Arrange
         int a = 4;
         int b = 5;
@@ -87,7 +87,7 @@ public class CalculatorTest {
 
     @Test
     @Tag("BasicsOperations")
-    void testSubtractTwoPositiveNumbers() {
+    void Subtract_TwoPositiveNumbers_ReturnTheirSum() {
         // Arrange
         int a = 10;
         int b = 4;
@@ -101,7 +101,7 @@ public class CalculatorTest {
 
     @Test
     @Tag("BasicsOperations")
-    void testDivideTwoPositiveNumbers() {
+    void Divide_TwoPositiveNumbers_ReturnTheResult() {
         // Arrange
         int a = 20;
         int b = 4;
@@ -115,7 +115,7 @@ public class CalculatorTest {
 
     @Test
     @Tag("BasicsOperations")
-    void testDivideByZeroShouldThrowException() {
+    void Divide_ByZero_ShouldThrowException() {
         // Arrange
         int a = 10;
         int b = 0;
@@ -130,7 +130,7 @@ public class CalculatorTest {
 
     @ParameterizedTest(name = "{0} * 0 must be 0")
     @ValueSource(ints = { -1, 0, 1, 42, 100 })
-    public void multiplyByZeroShouldReturnZero(int arg) {
+    public void Multiply_ByZero_ShouldReturnZero(int arg) {
         // Act
         int result = calculatorUnderTest.multiply(arg, 0);
 
@@ -146,7 +146,7 @@ public class CalculatorTest {
             "-1, 1, 0",
             "-5, -5, -10"
     })
-    public void AddShouldReturnTheSumOfTwoValue(int arg1, int arg2, int expectedResult) {
+    public void Add_OfTwoValue_ShouldReturnTheSum(int arg1, int arg2, int expectedResult) {
         // Act
         int result = calculatorUnderTest.add(arg1, arg2);
 
