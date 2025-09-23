@@ -8,8 +8,11 @@ public class CalculatorServiceImpl implements CalculatorService {
 
 	private final Calculator calculator;
 
-	public CalculatorServiceImpl(Calculator calculator) {
+	private final SolutionFormatter solutionFormatter;
+
+	public CalculatorServiceImpl(Calculator calculator, SolutionFormatter solutionFormatter) {
 		this.calculator = calculator;
+		this.solutionFormatter = solutionFormatter;
 	}
 
 	@Override
@@ -18,23 +21,29 @@ public class CalculatorServiceImpl implements CalculatorService {
 
 		Integer response = null;
 		switch (type) {
-		case ADDITION:
-			response = calculator.add(calculationModel.getLeftArgument(), calculationModel.getRightArgument());
-			break;
-		case SUBTRACTION:
-			response = calculator.sub(calculationModel.getLeftArgument(), calculationModel.getRightArgument());
-			break;
-		case MULTIPLICATION:
-			response = calculator.multiply(calculationModel.getLeftArgument(), calculationModel.getRightArgument());
-			break;
-		case DIVISION:
-			response = calculator.divide(calculationModel.getLeftArgument(), calculationModel.getRightArgument());
-			break;
-		default:
-			throw new UnsupportedOperationException("Unsupported calculations");
+			case ADDITION:
+				response = calculator.add(calculationModel.getLeftArgument(), calculationModel.getRightArgument());
+				break;
+			case SUBTRACTION:
+				response = calculator.sub(calculationModel.getLeftArgument(), calculationModel.getRightArgument());
+				break;
+			case MULTIPLICATION:
+				response = calculator.multiply(calculationModel.getLeftArgument(), calculationModel.getRightArgument());
+				break;
+			case DIVISION:
+				try {
+					response = calculator.divide(calculationModel.getLeftArgument(),
+							calculationModel.getRightArgument());
+				} catch (ArithmeticException e) {
+					throw new IllegalArgumentException("Division by zero is not allowed", e);
+				}
+				break;
+			default:
+				throw new UnsupportedOperationException("Unsupported calculations");
 		}
 
 		calculationModel.setSolution(response);
+		calculationModel.setFormattedSolution(solutionFormatter.format(response));
 		return calculationModel;
 	}
 
