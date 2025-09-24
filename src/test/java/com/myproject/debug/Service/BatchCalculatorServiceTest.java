@@ -60,38 +60,57 @@ public class BatchCalculatorServiceTest {
                         tuple(6, CalculationType.MULTIPLICATION, 8),
                         tuple(9, CalculationType.DIVISION, 3));
     }
-    
+
     // Anwser mocking example
     @Test
     public void givenOperationsList_whenbatchCalculate_thenCallsServiceAndReturnsAnswer()
             throws IOException, URISyntaxException {
         // GIVEN
-        final Stream<String> operations =
-            Arrays.asList("2 + 2", "5 - 4", "6 x 8", "9 / 3").stream();
+        final Stream<String> operations = Arrays.asList("2 + 2", "5 - 4", "6 x 8", "9 / 3").stream();
         when(calculatorService.calculate(any(CalculationModel.class)))
-        .then(invocation -> {
-            final CalculationModel model = invocation.getArgument(0, CalculationModel.class);
-            switch (model.getType()) {
-            case ADDITION:
-                model.setSolution(4);
-                break;
-            case SUBTRACTION:
-                model.setSolution(1);
-                break;
-            case MULTIPLICATION:
-                model.setSolution(48);
-                break;
-            case DIVISION:
-                model.setSolution(3);
-                break;
-            default:
-            }
-            return model;
-        });
+                .then(invocation -> {
+                    final CalculationModel model = invocation.getArgument(0, CalculationModel.class);
+                    switch (model.getType()) {
+                        case ADDITION:
+                            model.setSolution(4);
+                            break;
+                        case SUBTRACTION:
+                            model.setSolution(1);
+                            break;
+                        case MULTIPLICATION:
+                            model.setSolution(48);
+                            break;
+                        case DIVISION:
+                            model.setSolution(3);
+                            break;
+                        default:
+                    }
+                    return model;
+                });
 
         // WHEN
-        final List<CalculationModel> results =
-            batchCalculatorService.batchCalculate(operations);
+        final List<CalculationModel> results = batchCalculatorService.batchCalculate(operations);
+
+        // THEN
+        verify(calculatorService, times(4)).calculate(any(CalculationModel.class));
+        assertThat(results).extracting("solution").containsExactly(4, 1, 48, 3);
+
+    }
+
+    // Multiple awnsers mocking example
+    @Test
+    public void givenOperationsList_whenbatchCalculate_thenCallsServiceAndReturnsMultipleAnswers()
+            throws IOException, URISyntaxException {
+        // GIVEN
+        final Stream<String> operations = Arrays.asList("2 + 2", "5 - 4", "6 x 8", "9 / 3").stream();
+        when(calculatorService.calculate(any(CalculationModel.class)))
+                .thenReturn(new CalculationModel(CalculationType.ADDITION, 2, 2, 4))
+                .thenReturn(new CalculationModel(CalculationType.SUBTRACTION, 5, 4, 1))
+                .thenReturn(new CalculationModel(CalculationType.MULTIPLICATION, 6, 8, 48))
+                .thenReturn(new CalculationModel(CalculationType.DIVISION, 9, 3, 3));
+
+        // WHEN
+        final List<CalculationModel> results = batchCalculatorService.batchCalculate(operations);
 
         // THEN
         verify(calculatorService, times(4)).calculate(any(CalculationModel.class));
